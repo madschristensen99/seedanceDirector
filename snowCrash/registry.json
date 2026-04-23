@@ -1,0 +1,643 @@
+{
+  "_schema_version": "0.2",
+  "_notes": "Typed entity registry for the Snow Crash film adaptation. Entities reference other entities by ID. The expansion script resolves references at configurable depth when building rendering prompts.",
+
+  "universe": {
+    "id": "snow_crash",
+    "name": "Snow Crash",
+    "based_on": "Snow Crash by Neal Stephenson (1992)",
+    "setting_pitch": "Near-future America in the early 21st century, after the federal government has collapsed into privatized franchise city-states (Burbclaves) and corporate sovereigns (FOQNEs). The Mafia runs pizza delivery. Reverend Wayne's runs strip-mall churches. Mr. Lee runs Hong Kong as a global franchise. Alongside the physical world is the Metaverse — a shared virtual boulevard (the Street) accessed through VR goggles, where avatars walk and work. A viral information-weapon named Snow Crash is spreading through both worlds at once.",
+    "tone": "Cyberpunk satire. Hyperkinetic. Comedy and dread in the same beat. Action film pacing with philosophical-linguistic undercurrents about language, religion, and information.",
+    "era": "1990s retrofuture / early-2000s imagined future",
+    "visual_palette": "Neon franchise loglo saturating every surface. Matte blacks absorbing light. Red-and-white highway corpuscles flowing through LA at night. The Metaverse rendered as a vast dark sphere with garish lit boulevards."
+  },
+
+  "styles": {
+    "default": {
+      "suffix": "Cinematic style."
+    },
+    "dystopian_establishing": {
+      "suffix": "Cinematic dystopian-establishing style. Wide aerial or low-angle views of neon-saturated sprawl."
+    },
+    "action": {
+      "suffix": "Cinematic high-speed action style. Dynamic camera, motion blur on key elements, sharp focus on the hero."
+    },
+    "intimate": {
+      "suffix": "Cinematic intimate dialogue style. Tight two-shots, shallow depth of field, warm key light."
+    },
+    "montage": {
+      "suffix": "Cinematic research-montage style. Rapid glowing wipe transitions, floating captions, time-lapse cues."
+    },
+    "horror_medical": {
+      "suffix": "Cinematic medical-horror style. Cold fluorescent light, pale blue-green palette, unsteady tension."
+    },
+    "metaverse_virtual": {
+      "suffix": "Cinematic virtual-world style. Crisp digital rendering against matte black void. Neon boulevard colors. Slight uncanny geometric cleanliness."
+    },
+    "title_card": {
+      "suffix": "Cinematic title-card style. Static composition, single light source, resolved typography."
+    }
+  },
+
+  "species": {
+    "human": {
+      "name": "Human",
+      "description": "Ordinary Homo sapiens."
+    },
+    "avatar_custom": {
+      "name": "Custom Metaverse Avatar",
+      "description": "A hand-coded Metaverse body reflecting its owner's real appearance at high resolution. A marker of hacker status and taste — custom avatars are harder to render than flashy ones."
+    },
+    "avatar_bw_public": {
+      "name": "Black-and-White Public-Terminal Avatar",
+      "description": "A Metaverse avatar goggling in from a cheap public terminal. Rendered in grainy low-resolution black-and-white, edges juddering into hard pixel blocks, face fragmented as if repeatedly pressed against a xerox machine."
+    },
+    "avatar_offshelf": {
+      "name": "Off-the-Shelf Commercial Avatar",
+      "description": "A mass-market Metaverse avatar sold at Wal-Mart. Cheaply rendered, exaggerated proportions, limited facial range. Brandy (female) and Clint (male) are the two dominant product lines."
+    },
+    "daemon_software": {
+      "name": "Metaverse Daemon",
+      "description": "A piece of software rendered as an avatar — not a real person. Fills utility roles: bartenders, bouncers, librarians. Indistinguishable from a human avatar unless it malfunctions."
+    },
+    "cybernetic_dog": {
+      "name": "Rat Thing (Ng Security Semi-Autonomous Guard Unit)",
+      "description": "Robotic-biological hybrid the size of a Rottweiler. Armored hide, cheetah-like legs, an impossibly long segmented mechanical tail. Glowing radiator fins along the spine. A modified dog brain inside a mechanical chassis. Moves too fast to see. Utterly loyal to its 'yard.'"
+    },
+    "gorilla_rendered": {
+      "name": "Gorilla Bouncer Daemon",
+      "description": "A realistically rendered silverback gorilla in a perfectly fitted tuxedo. A bouncer daemon belonging to The Black Sun. Photorealistic fur, expressionless face, coordinated movement with its pack."
+    }
+  },
+
+  "factions": {
+    "cosanostra_pizza": {
+      "name": "CosaNostra Pizza, Inc.",
+      "kind": "corporate_mafia",
+      "leader": "uncle_enzo",
+      "description": "The Mafia's legitimate front. Pizza delivery as militarized industry. Thirty-minute guarantee enforced by personal apology helicopter visits from the Capo himself. Drivers trained at CosaNostra Pizza University. Motto: 'you've got a friend in The Family.' Symbol: the Uncle Enzo billboard with the Our Thing Foundation tagline.",
+      "visual_markers": "Matte-black Deliverator vehicles with orange LED grille lights. Pinstripe suits. Pizza boxes with red LED countdown readouts."
+    },
+    "radiks": {
+      "name": "RadiKS (Radikal Kourier Systems)",
+      "kind": "corporation",
+      "description": "The premier skateboard-courier delivery service. Kouriers 'poon' onto passing vehicles with electromagnetic grappling hooks, surfing traffic for speed. Employs teenage thrashers in armored coveralls covered in barcode visas allowing them into dozens of Burbclaves and FOQNEs.",
+      "visual_markers": "Orange-and-blue armored coveralls. RadiKS Mark IV smartwheel skateboards. Chrome poon-reel handles. Knight-vision goggles."
+    },
+    "metacops": {
+      "name": "MetaCops Unlimited",
+      "kind": "private_police",
+      "description": "Privatized police force serving multiple Burbclaves on contract. Dial 1-800-THE COPS, all major credit cards accepted. Bureaucratic overreach turned corporate product. Weapons include loogie guns (sticky fibrous restraint projectiles).",
+      "visual_markers": "Glossy black paramilitary tactical gear. Chandeliers of clipped equipment. Black patrol cars with chrome dinner-plate-sized badges."
+    },
+    "enforcers": {
+      "name": "The Enforcers",
+      "kind": "mercenary_police",
+      "description": "A more expensive, more violent tier of private security than MetaCops. Unofficial motto on their T-shirts: SUE ME. Take the high-risk contracts everyone else refuses.",
+      "visual_markers": "Electropigment windbreakers switching color on demand. Erect posture, bulletproof when zipped."
+    },
+    "cic": {
+      "name": "Central Intelligence Corporation (CIC)",
+      "kind": "information_broker",
+      "description": "The merged entity formerly known as the Central Intelligence Agency and the Library of Congress, now a publicly traded corporation. Clients pay to access 'the Library' — the entire searchable database of global information. Freelance stringers upload intel for piecework payment.",
+      "visual_markers": "Exists mostly as an interface. Headquartered in Langley, VA."
+    },
+    "mr_lees_hong_kong": {
+      "name": "Mr. Lee's Greater Hong Kong",
+      "kind": "foqne",
+      "description": "A global Franchise-Organized Quasi-National Entity. Soothing blue and green signage. Famous for lush 'lawngrids' that double as paved parking. Guns are illegal inside. Security handled by the Rat Thing. Considered the safest franchulate on any strip.",
+      "visual_markers": "Calming blue-and-green signs. Lawngrids. Millimeter-wave radar antennas pointed at the ground. Robot security."
+    },
+    "mafia_stealth": {
+      "name": "Mafia Stealth Surveillance",
+      "kind": "covert_operations",
+      "description": "The Mafia's covert arm — stealth helicopters, barcode-scanning lasers, total data dossiers on every Kourier and contractor. Extension of CosaNostra Pizza's customer-satisfaction infrastructure.",
+      "visual_markers": "Tastefully black double-bladed stealth helicopters. Infrared laser scanners. No logos."
+    },
+    "tmawh_development": {
+      "name": "The Mews at Windsor Heights Development Corporation",
+      "kind": "burbclave",
+      "description": "Generator of identical-layout Burbclaves worldwide. Every TMAWH from Fairbanks to Shenzhen uses the same street plan — a Deliverator can navigate any of them blind. Owns the streets, the brass fire hydrants, the marble street-sign gravestones.",
+      "visual_markers": "DynaVictorian McMansions. DEAD END signs. CHILDREN PLAYING ideograms. Marble street-sign gravestones."
+    },
+    "white_columns": {
+      "name": "White Columns Burbclave",
+      "kind": "burbclave_apartheid",
+      "description": "An explicitly apartheid Burbclave — WHITE PEOPLE ONLY, NON-CAUCASIANS MUST BE PROCESSED. Antebellum-plantation aesthetic. Gas torches, magnolia trees, jockey statues, columned porticos. Sign of the privatization of bigotry into a premium product.",
+      "visual_markers": "Wrought-iron gates. Columned porticos. Pastel McMansions with plantation affectations."
+    },
+    "buynfly": {
+      "name": "Buy 'n' Fly",
+      "kind": "franchise_convenience",
+      "description": "Convenience-store franchise operated largely by recent Central Asian (Tadzhik, Abkhazian) immigrants. Doubles as rent-a-jail location (The Clink). Massive UPC-barcode signage overhead.",
+      "visual_markers": "Giant Universal Product Code sign. Radioactive-blue security lighting. Dingy basements."
+    },
+    "mercy_chain": {
+      "name": "Mercy Hospital Chain",
+      "kind": "religious_hospital",
+      "description": "Catholic hospital chain. Technically Vatican airspace by franchise treaty. Run by nun-surgeons in white coats over black habits.",
+      "visual_markers": "White cross and dove logo. Rooftop helipads. Nun-surgeons."
+    },
+    "cic_stringers": {
+      "name": "CIC Stringers (Hiro's Trade)",
+      "kind": "freelance_network",
+      "description": "Loose network of freelance intelligence gatherers who upload fragments — videos, documents, gossip, software samples — to the CIC Library for piecework payment. Hiro is one. 99% of what they upload never gets used.",
+      "visual_markers": "None — they are defined by anonymity and the tools of their trade."
+    },
+    "rife_org": {
+      "name": "L. Bob Rife's Operation",
+      "kind": "media_cult",
+      "description": "The business empire of L. Bob Rife, cable-television monopolist. Includes Rife Bible College (the richest archaeology department in the world, currently digging at Eridu) and a private church whose adherents are infected with the metavirus. Rife's yacht is called the Raft.",
+      "visual_markers": "L. Bob Rife in cream western suits. Bolo ties. Archaeology sites. Pentecostal church services."
+    }
+  },
+
+  "artifacts": {
+    "katana_hiro": {
+      "name": "Hiro's Katana",
+      "kind": "weapon",
+      "description": "A three-foot curved Japanese long sword, World War II era, in a black lacquer scabbard. Hiro's father looted it from a Nipponese officer at Nagasaki. Real steel in Reality, identical custom-rendered twin in the Metaverse.",
+      "carried_by": "hiro"
+    },
+    "wakizashi_hiro": {
+      "name": "Hiro's Wakizashi",
+      "kind": "weapon",
+      "description": "A one-handed Japanese short sword, matched pair with the katana, also in black lacquer scabbard. Worn diagonally in the waistband with the katana at the hip.",
+      "carried_by": "hiro"
+    },
+    "deliverator_car": {
+      "name": "The Deliverator Car",
+      "kind": "vehicle",
+      "description": "A low-slung matte-black lozenge-shaped electric car. No visible windows from outside. Row of pulsing orange LED lights where a grille would be, looking like a gasoline fire. Big sticky tires with contact patches the size of a fat lady's thighs. A side hatch unfolds like a beetle's wing to reveal pizza slots. Belongs to CosaNostra Pizza.",
+      "operated_by": "hiro:deliverator"
+    },
+    "yt_skateboard": {
+      "name": "Y.T.'s Skateboard (RadiKS Mark IV)",
+      "kind": "vehicle",
+      "description": "A sleek black skateboard fitted with RadiKS Mark IV smartwheels — hubs with many telescoping spokes, each spoke ending in a rubber-treaded foot that plants and lifts in sequence. Sonar, laser rangefinding, and millimeter-wave radar identify obstacles before the rider sees them. Can absorb curb jumps, Jersey barriers, and dropped fences.",
+      "carried_by": "yt"
+    },
+    "yt_poon": {
+      "name": "Y.T.'s MagnaPoon",
+      "kind": "tool",
+      "description": "A chrome reel/handle unit with a salad-bowl-sized electromagnet head on the end of an arachnofiber cable. Used to 'poon' (harpoon onto) passing vehicles for towed surfing. The version Y.T. carries sticks to steel and iron only, not aluminum.",
+      "carried_by": "yt"
+    },
+    "yt_coverall": {
+      "name": "RadiKS Kourier Coverall",
+      "kind": "uniform",
+      "description": "An orange-and-blue armored Kourier uniform padded all over with sintered armorgel. Covered in a hundred tiny pockets. The chest glitters with dozens of barcode visa patches, each one granting access to a different Burbclave, FOQNE, or highway.",
+      "carried_by": "yt"
+    },
+    "yt_knight_visions": {
+      "name": "RadiKS Knight Vision Goggles",
+      "kind": "tool",
+      "description": "Matte-black goggles with adaptive tinting and near-infrared night vision. Dim automatically against glare and brighten against darkness. Y.T. pushes them up on her forehead when indoors.",
+      "carried_by": "yt"
+    },
+    "hiro_black_wedge": {
+      "name": "Hiro's Black Wedge Computer",
+      "kind": "tool",
+      "description": "A featureless black wedge-shaped portable computer, no visible power cord. A polished purplish fisheye lens emerges from its top surface when in use. A translucent plastic tube with a hair-thin fiber-optic cable plugs directly into the unit's fiber socket. Inside are red/green/blue lasers that draw the Metaverse onto Hiro's goggles.",
+      "carried_by": "hiro"
+    },
+    "hiro_vr_goggles": {
+      "name": "Hiro's VR Goggles",
+      "kind": "tool",
+      "description": "Wraparound VR goggles with integrated noise-cancelling earphones. Throw a smoky haze across the wearer's eyes. The lenses reflect a miniaturized, distorted view of the Metaverse back at anyone watching. Hiro's primary work tool.",
+      "carried_by": "hiro"
+    },
+    "hiro_business_card": {
+      "name": "Hiro's Business Card",
+      "kind": "document",
+      "description": "A glowing white rectangle, real paper in Reality. Reads: HIRO PROTAGONIST — Last of the Freelance Hackers — Greatest Swordfighter in the World — Stringer, Central Intelligence Corporation — Specializing in Software-related Intel (Music, Movies & Microcode). Reverse side: contact info across half a dozen networks plus a Metaverse address.",
+      "carried_by": "hiro"
+    },
+    "cosanostra_pizza_box": {
+      "name": "CosaNostra Smart Pizza Box",
+      "kind": "consumer_product",
+      "description": "A corrugated plastic pizza carapace with a red LED readout on its side counting minutes since the order was placed. Interfaces wirelessly with the Deliverator's car, shares the address of the caller, tracks delivery time in real time. Links to CosaNostra Headquarters so Uncle Enzo knows instantly when a driver runs late."
+    },
+    "snow_crash_hypercard": {
+      "name": "Snow Crash Hypercard",
+      "kind": "metavirus_carrier",
+      "description": "A hypercard — a Metaverse data object shaped like a business card. Pulsing with menace. Carries the Snow Crash payload: a pre-packaged Brandy daemon who unrolls a scroll of binary static directly into the victim's optic nerve, infecting their brain with the metavirus. Tears in half to activate.",
+      "distributed_by": "raven"
+    },
+    "babel_infocalypse_card": {
+      "name": "Babel/Infocalypse Hypercard",
+      "kind": "information_archive",
+      "description": "A cream-colored finely textured hypercard glowing with glossy black text: BABEL / INFOCALYPSE. Given to Hiro by Juanita. Contains a massive data payload — ancient Sumerian texts, Biblical studies, neurolinguistics, and extensive intel on L. Bob Rife. Comes with a Librarian daemon bundled inside to help sort through it.",
+      "distributed_by": "juanita"
+    },
+    "asherah_totem_artifact": {
+      "name": "Asherah Totem",
+      "kind": "mythological_artifact",
+      "description": "A Yahwistic cult totem from ancient Palestine, c. 900 BCE. A carved wooden tree-pillar stylized with feminine features — suggestions of a pregnant belly, branches like outstretched arms. Serpents coiled around the base. Weathered and ancient."
+    },
+    "code_of_hammurabi": {
+      "name": "Code of Hammurabi",
+      "kind": "mythological_artifact",
+      "description": "A black stone obelisk carved with cuneiform laws, c. 1750 BCE."
+    },
+    "enki_clay_envelope": {
+      "name": "The Clay Envelope (Nam-Shub of Enki)",
+      "kind": "mythological_artifact",
+      "description": "A small Sumerian clay envelope from Eridu, 3rd millennium BCE. A tamper-proof document — a smaller clay tablet sealed inside a larger clay shell. Contains the nam-shub of Enki: an incantation that, according to legend, originally fractured the unified language of humanity. In the personal collection of L. Bob Rife."
+    },
+    "loogie_gun": {
+      "name": "Short-Range Chemical Restraint Projector (Loogie Gun)",
+      "kind": "weapon",
+      "description": "A MetaCops sidearm that fires football-sized sticky fibrous goo balls. The strands wrap around limbs and bond to steel, instantly restraining the target. Strong vinyl-fume smell during setting."
+    },
+    "liquid_knuckles": {
+      "name": "Liquid Knuckles",
+      "kind": "weapon",
+      "description": "A small concentrated pepper-spray-like incapacitant canister. Carried by Kouriers in one of their hundred pockets."
+    }
+  },
+
+  "settings": {
+    "la_basin_night": {
+      "name": "The LA Basin at Night (Aerial)",
+      "scale": "region",
+      "description": "Vast glittering aerial view of the Los Angeles basin at night — a grid of amber franchise signs and freeway traffic stretching to the horizon. The sky dominated by neon corporate loglo. Red and white corpuscles of headlights and taillights throb down highways like blood through arteries. Organic haze hangs over the central neighborhoods."
+    },
+    "csv5_highway": {
+      "name": "CSV-5 / Fairlanes Inc. Highway",
+      "parent": "la_basin_night",
+      "scale": "highway",
+      "description": "Privatized Fairlanes Inc. Route CSV-5 at night. Wide multi-lane highway in Southern California, ribbon of neon franchise loglo on both sides smearing into one continuous electric light as vehicles pass at 120+ km/h. Type A driver's road. High-traction patented Fairlanes pavement."
+    },
+    "cosanostra_3569": {
+      "name": "CosaNostra Pizza #3569",
+      "parent": "csv5_highway",
+      "scale": "building",
+      "operated_by": "cosanostra_pizza",
+      "description": "A squat low-slung pizza franchise at night on Vista Road just off CSV-5, dwarfed by an enormous aramid-fiber-pillared billboard above it showing Uncle Enzo in a pinstripe suit. Drive-through chute on one side for Deliverator vehicles. A Nipponese robot arm inside hands pizzas out through a small window."
+    },
+    "tmawh_burbclave": {
+      "name": "The Mews at Windsor Heights (TMAWH)",
+      "parent": "la_basin_night",
+      "scale": "burbclave",
+      "operated_by": "tmawh_development",
+      "description": "A generic identical-layout Burbclave of DynaVictorian McMansions on winding manicured streets. Every TMAWH from Fairbanks to Shenzhen uses the same street plan. DEAD END signs, CHILDREN PLAYING ideograms, speed bumps, brass fire hydrants robot-polished every Thursday, marble street-sign gravestones. Iron security gates at entrances. Border-post checkpoints with customs agents."
+    },
+    "burbclave_pool": {
+      "name": "The Empty Backyard Pool",
+      "parent": "tmawh_burbclave",
+      "scale": "backyard",
+      "description": "An empty in-ground swimming pool in a TMAWH backyard, concrete walls curved like a halfpipe. At the far end, the wrecked matte-black Deliverator car is crashed nose-first into the wall, steam hissing. Above, the two-story pastel-clapboard house owning the pool glows with warm yellow interior light. Bedroom windows visible on the upper floor. A torn-down wooden fence behind the car."
+    },
+    "white_columns_gate": {
+      "name": "White Columns Burbclave Gate",
+      "parent": "la_basin_night",
+      "scale": "burbclave_entrance",
+      "operated_by": "white_columns",
+      "description": "An ornate wrought-iron Antebellum-style gate under a massive Greek-columned gatehouse, illuminated by gas-flame torches. Above the entrance in gilded letters: WHITE COLUMNS — WHITE PEOPLE ONLY. NON-CAUCASIANS MUST BE PROCESSED. Mounted on an electromagnetic railgun for quick openings."
+    },
+    "white_columns_interior": {
+      "name": "White Columns Microplantations",
+      "parent": "white_columns_gate",
+      "scale": "burbclave",
+      "description": "Identical Southern-style microplantations line tree-lined lanes, each with columned portico, magnolia trees, jockey statue, and manicured lawn. Gas lanterns flicker. Crickets and cicadas at night."
+    },
+    "buynfly_lot": {
+      "name": "Buy 'n' Fly Parking Lot",
+      "parent": "la_basin_night",
+      "scale": "franchise_lot",
+      "operated_by": "buynfly",
+      "description": "A convenience-store franchise parking lot radioactive-blue with security floodlights. A massive illuminated sign overhead: a giant Universal Product Code in black-on-white with BUY 'N' FLY underneath. A smaller sign clipped below reads THE CLINK. The back lot is fetid with overflowing dumpsters. Jeek taxicabs often gather here."
+    },
+    "clink_basement": {
+      "name": "The Clink (Buy 'n' Fly Basement)",
+      "parent": "buynfly_lot",
+      "scale": "room",
+      "operated_by": "buynfly",
+      "description": "A concrete basement beneath a Buy 'n' Fly convenience store. Cold-water pipes run down the cinderblock walls. A single grimy barred window is bolted with a multilingual emergency fire-release. A single overhead light bulb. The back steel door shows jimmy marks around its edges. Detainees are handcuffed to the cold-water pipe. A rusty coffee can on the floor doubles as a toilet."
+    },
+    "hoosegow_reception": {
+      "name": "The Hoosegow Reception",
+      "parent": "la_basin_night",
+      "scale": "building",
+      "description": "Detention franchise lit up like a Wild West theme park. Saguaro-cactus-and-cowboy-hat logo. Walls lined with illuminated signs of Old West desperadoes. Check-in counter styled in faux rustic wood; employees wear cowboy hats and five-pointed star badges."
+    },
+    "hong_kong_franchise": {
+      "name": "Mr. Lee's Greater Hong Kong Franchise",
+      "parent": "la_basin_night",
+      "scale": "franchise_lot",
+      "operated_by": "mr_lees_hong_kong",
+      "description": "A calm blue-and-green-signed FOQNE franchise among the glare of the franchise ghetto. Famous for its lawngrid — chemically maintained turf that doubles as a paved parking surface. Covered in antennas: satellite uplinks pointed at the sky, tiny millimeter-wave radar transceivers pointed at the ground. Severe Tire Damage spikes at the entrance. Handled by robot security. No guns allowed anywhere inside."
+    },
+    "ustorit_unit": {
+      "name": "Hiro's U-Stor-It Unit",
+      "parent": "la_basin_night",
+      "scale": "room",
+      "description": "A 20-by-30 storage unit converted to living space in Inglewood, CA. Bare concrete slab floor, corrugated steel walls separating it from neighboring units. Roll-up steel door facing northwest admits red sunset light and neon franchise loglo in oversaturated colors. Makeshift low Japanese-style table — cargo pallet on cinderblocks — in the middle. Futon along one wall. Near LAX, so jumbo jets periodically eclipse the sun and thunder overhead."
+    },
+    "da5id_house": {
+      "name": "Da5id's House (Beachwood Canyon)",
+      "parent": "la_basin_night",
+      "scale": "building",
+      "description": "A modernist castle-like house with a high turret on one end, at the summit of a small hill at the top of Beachwood Canyon. Hollywood sign visible in the distance. Interior: handsome modernist home office with walls of books and framed Metaverse concept art, a large wooden desk."
+    },
+    "da5id_turret": {
+      "name": "Da5id's Turret",
+      "parent": "da5id_house",
+      "scale": "rooftop",
+      "description": "A stone turret atop Da5id's house. Panoramic night view of the LA basin spreading to the horizon — a glittering circuit board of loglo. An old rusty hibachi barbecue sits in a corner of the platform, half-buried in gray ash, an archaeological relic of better days."
+    },
+    "mercy_hospital_roof": {
+      "name": "Mercy Hospital Rooftop",
+      "parent": "la_basin_night",
+      "scale": "rooftop",
+      "operated_by": "mercy_chain",
+      "description": "A rooftop helipad on a Mercy chain hospital. Clean modern building with the white cross and dove logo. Red landing lights circle the pad. Part of Vatican airspace by franchise treaty."
+    },
+    "mercy_hospital_room_564": {
+      "name": "Mercy Hospital Room 564 (Neurology)",
+      "parent": "mercy_hospital_roof",
+      "scale": "room",
+      "operated_by": "mercy_chain",
+      "description": "A dimmed hospital room in the neurology ward. Standard hospital bed with wide thick leather restraint straps at head and foot. EKG monitor beeping irregularly. Oxygen line hissing. Pale blue-green medical lighting."
+    },
+    "the_metaverse": {
+      "name": "The Metaverse",
+      "scale": "virtual_world",
+      "description": "A shared virtual reality accessed through VR goggles. A single vast black sphere 10,000km in radius. Always nighttime. The only light sources are the Street and its branching developments. Rendered according to the Global Multimedia Protocol Group's spec."
+    },
+    "metaverse_street": {
+      "name": "The Street",
+      "parent": "the_metaverse",
+      "scale": "boulevard",
+      "description": "A hundred-meter-wide neon boulevard circling the equator of the Metaverse sphere. Monorail track runs down the middle. Both sides lined with impossibly tall neon buildings and overhead animercials — a dozen Manhattans stacked on top of each other. Populated by millions of avatars of every form imaginable, from Nipponese businessmen to talking penises."
+    },
+    "metaverse_port_zero": {
+      "name": "Port Zero (Local Monorail Stop)",
+      "parent": "metaverse_street",
+      "scale": "station",
+      "description": "A local port of entry and monorail stop on the Street. Where avatars from public terminals materialize and where basic commuters switch between the monorail and foot traffic."
+    },
+    "hiro_metaverse_office": {
+      "name": "Hiro's Metaverse Office",
+      "parent": "metaverse_street",
+      "scale": "private_space",
+      "description": "A minimalist Japanese-style virtual room with tatami floor, sliding shoji screens. An entire wall is pure matte black nothingness that serves as a working canvas for floating data. Sword rack in the corner."
+    },
+    "hacker_neighborhood": {
+      "name": "Hiro's Hacker Neighborhood",
+      "parent": "metaverse_street",
+      "scale": "neighborhood",
+      "description": "A tasteful virtual neighborhood adjacent to the Street, bought cheap ten years ago by Hiro and his buddies. A couple of Frank Lloyd Wright reproductions and some fancy Victoriana. Soft interior light in every house. No animercials allowed."
+    },
+    "blacksun_exterior": {
+      "name": "The Black Sun Exterior",
+      "parent": "metaverse_street",
+      "scale": "building",
+      "description": "A squat truncated pyramid rendered in pure matte black, seeming to absorb all the neon around it. A single door and no windows. A single matte black hemisphere a meter across is its only decoration, above the carved letters: THE BLACK SUN. Thousands of avatars mill around the base, unable to cross the threshold without invitation."
+    },
+    "blacksun_interior": {
+      "name": "The Black Sun Interior",
+      "parent": "blacksun_exterior",
+      "scale": "venue",
+      "description": "A cavernous Metaverse bar the size of two football fields. Matte-black floor, walls, and ceiling. Floating square black tabletops hover at seated height in a perfect grid — no legs drawn. At the center, four quadrants (Hacker, Movie Star, Rock Star, Nipponese) meet at a circular bar sixteen meters across. Avatars here are high-resolution and cannot walk through each other, unlike on the Street. Daemons serve drinks; gorilla bouncer daemons eject the disruptive."
+    },
+    "blacksun_private_room": {
+      "name": "The Black Sun Private Conference Room",
+      "parent": "blacksun_interior",
+      "scale": "private_space",
+      "description": "A small private conference room at the back of The Black Sun. No hovering tables — just a simple minimalist room with two chairs facing each other, matte-black walls. For meetings that require quiet."
+    },
+    "eridu_ziggurat": {
+      "name": "Eridu Ziggurat (Montage Artifact)",
+      "scale": "mythological",
+      "description": "A massive reconstruction of the ancient Sumerian ziggurat of Eridu — a tiered stepped pyramid of mudbrick catching amber sunlight. The Mesopotamian plain stretches flat behind it. Dry wind sweeps sand across the brick. c. 3000 BCE."
+    }
+  },
+
+  "characters": {
+    "hiro": {
+      "name": "Hiro Protagonist",
+      "full_name": "Hiroaki Protagonist",
+      "aliases": ["The Deliverator", "Last of the Freelance Hackers"],
+      "species": "human",
+      "age": 28,
+      "gender": "male",
+      "ethnicity": "Korean-Japanese (mother) / African-American (father)",
+      "affiliations": ["cosanostra_pizza", "cic", "cic_stringers"],
+      "carries": ["katana_hiro", "wakizashi_hiro", "hiro_black_wedge", "hiro_vr_goggles", "hiro_business_card"],
+      "short": "Mixed-race freelance hacker and pizza deliverator in his late twenties.",
+      "physical_base": "Cappuccino skin, spiky truncated dreadlocks with a slightly receding hairline, high cheekbones, Asian eyes. Athletic build.",
+      "default_variant": "reality",
+      "variants": {
+        "deliverator": "Wearing a sleek black arachnofiber Deliverator uniform that drinks the light out of the air — gritty sintered-armorgel pads at knees and elbows, matte-black, almost liquid in its non-reflectivity. Face often partly shadowed. Twin Japanese swords initially stored in the trunk of his car.",
+        "reality": "Wearing a simple dark t-shirt and jeans inside the U-Stor-It, or the scuffed remains of the black arachnofiber uniform after the Deliverator scene. Twin Japanese swords strapped across his back when outdoors. Often wearing wraparound VR goggles that throw a smoky haze across his eyes.",
+        "metaverse": "Avatar form. An honest custom rendering of his real face, but wearing a crisp black leather kimono to mid-thigh tied with a black obi. Twin samurai swords at his waist. Expensive high-resolution custom avatar with subtle sheen — appears solid and realistic compared to the crowd."
+      }
+    },
+    "yt": {
+      "name": "Y.T.",
+      "full_name": "Yours Truly (refuses to share her real name)",
+      "species": "human",
+      "age": 15,
+      "gender": "female",
+      "ethnicity": "white American",
+      "affiliations": ["radiks"],
+      "carries": ["yt_skateboard", "yt_poon", "yt_coverall", "yt_knight_visions", "liquid_knuckles"],
+      "short": "Fifteen-year-old RadiKS Kourier with a custom skateboard and a stolen attitude.",
+      "physical_base": "Teenage girl, mid-teens, blonde, lightly freckled, blue-gray eyes, lean athletic build. Stands straight with confident bearing that reads older than her years.",
+      "default_variant": "kourier",
+      "variants": {
+        "kourier": "In full RadiKS Kourier uniform — orange-and-blue armored coverall padded with armorgel, chest covered in dozens of glowing barcode visa patches, matte-black Knight Vision goggles (on eyes or pushed up on forehead), small protective helmet. Chrome poon-reel handle at her hip. Riding a smartwheel skateboard."
+      }
+    },
+    "juanita": {
+      "name": "Juanita Marquez",
+      "species": "human",
+      "age": 28,
+      "gender": "female",
+      "ethnicity": "Mexican-American",
+      "affiliations": ["cic"],
+      "short": "Late twenties. Hiro's ex from Berkeley, one of the architects of Metaverse face-rendering, radical rosary-toting Catholic intellectual.",
+      "physical_base": "Long glossy dark hair never subjected to chemical process. Big intelligent dark eyes with the earliest hints of crow's-feet. High cheekbones, warm olive-toned skin. Tailored dark clothing — dark blouse, dark slacks. Elegant without trying.",
+      "default_variant": "reality",
+      "variants": {
+        "reality": "In person, wearing understated tailored dark clothing. Poised and guarded.",
+        "bw_avatar": "Her Metaverse avatar goggling in from a cheap public terminal. Species: avatar_bw_public. Recognizable by the way she folds her arms and tosses her hair, despite grainy jittery low-resolution black-and-white rendering. The resolution is so poor that her face fractures into xerox-grade pixel jitter, yet her presence is undimmed.",
+        "hires_avatar": "Her Metaverse avatar from a proper rig. Species: avatar_custom. An honest high-resolution rendering — no airbrushing, no flattery — including the earliest crow's-feet at her eyes. Glossy dark hair so well resolved that individual strands refract light into tiny rainbows."
+      }
+    },
+    "da5id": {
+      "name": "Da5id Meier",
+      "species": "human",
+      "age": 33,
+      "gender": "male",
+      "ethnicity": "Russian-Jewish American",
+      "affiliations": ["cic"],
+      "carries": [],
+      "short": "Supreme hacker overlord, founder and proprietor of The Black Sun, Juanita's ex-husband.",
+      "physical_base": "White man in his thirties, neat dark beard, wire-rim glasses, short dark hair, confident bearing. Wearing a sharp black button-up shirt.",
+      "default_variant": "avatar",
+      "variants": {
+        "avatar": "His Metaverse avatar — exquisitely rendered, micro-expressions perfectly captured thanks to Juanita's face software. Always confident, always gesturing expansively.",
+        "crashed": "A jittering cloud of bad digital karma where his avatar used to be — centrifugal cloud of lines and polygons flashing between color and black-and-white, rolling wildly across the color wheel. Hair-thin pixel lines shoot off in all directions, cutting across entire rooms. Momentary glimpses suggest a bearded face viewed through shattered glass.",
+        "catatonic": "His real body in a hospital bed. Beard unkempt and damp with sweat, glasses removed, dark hair matted. Hospital gown mostly fallen off. Wrists and ankles restrained in sheepskin-lined four-point leather cuffs. Eyes half-open but pointing in different directions. Body taut and shivering while unconscious. A small bruise on his ribs. EKG leads taped to his chest."
+      }
+    },
+    "raven": {
+      "name": "Raven",
+      "aliases": ["The Black-And-White Man"],
+      "species": "human",
+      "gender": "male",
+      "ethnicity": "Aleut / Inuit (revealed later)",
+      "affiliations": ["rife_org"],
+      "carries": ["snow_crash_hypercard"],
+      "short": "Tall, stolid drug dealer peddling Snow Crash outside The Black Sun. Introduced as an unknown.",
+      "physical_base": "Tall imposing figure. Long dark hair parted in the middle like a curtain. Forehead tattoo of words. Wispy Fu Manchu mustache drooping past his chin. Asian features. Calm, intimidating stillness.",
+      "default_variant": "bw_avatar",
+      "variants": {
+        "bw_avatar": "Metaverse avatar goggling in from a public terminal alongside a freeway. Species: avatar_bw_public. Rendered in grainy jittery low-resolution black-and-white. Edges break up into hard-edged pixels like a face pressed against a xerox machine. Taller than most avatars because he is actually that tall in reality."
+      }
+    },
+    "librarian": {
+      "name": "The Librarian",
+      "species": "daemon_software",
+      "affiliations": ["cic"],
+      "short": "CIC software daemon that accompanies the Babel/Infocalypse archive. Not a real person — a scholarly research assistant construct.",
+      "physical_base": "Middle-aged man in his fifties rendered as a friendly virtual daemon. Slightly rumpled brown tweed jacket with elbow patches, bow tie, half-moon reading glasses perched on his nose. Kind intelligent eyes, wispy gray-brown hair. Warm fatherly scholarly presence. Hands often clasped politely."
+    },
+    "uncle_enzo": {
+      "name": "Uncle Enzo",
+      "species": "human",
+      "age": 75,
+      "gender": "male",
+      "ethnicity": "Sicilian-American",
+      "affiliations": ["cosanostra_pizza"],
+      "short": "The Capo. Head of CosaNostra Pizza Incorporated. The Sicilian Colonel Sanders.",
+      "physical_base": "Dignified Italian-American man in his seventies. Impeccable pinstripe suit with luminous pocket square. Hair perfectly slicked back, each strand cut straight and square. Not quite smiling — avuncular glint in his eye."
+    },
+    "l_bob_rife": {
+      "name": "L. Bob Rife",
+      "species": "human",
+      "gender": "male",
+      "ethnicity": "white American (Texan)",
+      "affiliations": ["rife_org"],
+      "short": "Cable-television monopolist, antagonist. Funds a private church and an archaeology dig at Eridu.",
+      "physical_base": "Tall, lanky American man in his fifties. Silver hair slicked back. Weathered tanned face with cold bright eyes. Expensive cream-colored western-cut suit with bolo tie clasped by a large turquoise stone. Folksy drawl masking menace."
+    },
+    "vitaly": {
+      "name": "Vitaly Chernobyl",
+      "species": "human",
+      "age": 25,
+      "gender": "male",
+      "ethnicity": "Ukrainian",
+      "short": "Hiro's roommate. Lead singer of a Ukrainian nuclear fuzz-grunge collective. Usually unconscious.",
+      "physical_base": "Ukrainian man in his mid-twenties, pale, thin, unshaven, messy long dark hair. Faded band t-shirt and ripped jeans. Usually passed out on a futon. Electric guitar beside him, half-empty carton of Lucky Strikes on the floor."
+    },
+    "abkhazian_manager": {
+      "name": "The Abkhazian Pizza Manager",
+      "species": "human",
+      "gender": "male",
+      "ethnicity": "Abkhazian (former Soviet Caucasus)",
+      "affiliations": ["cosanostra_pizza"],
+      "short": "Frantic franchise manager at CosaNostra Pizza #3569 during the microwave-fire disaster.",
+      "physical_base": "Heavyset, football-shaped man in his forties. Sweating, red-faced, dark hair, wearing a stained CosaNostra Pizza uniform. Eyes roll as he hunts for English words. Carries a three-ring binder balanced on his belly."
+    },
+    "tadzhik_manager": {
+      "name": "The Tadzhik Buy 'n' Fly Manager",
+      "species": "human",
+      "gender": "male",
+      "ethnicity": "Tadzhik (Central Asian)",
+      "affiliations": ["buynfly"],
+      "short": "Manager of the Buy 'n' Fly where Y.T. is detained in The Clink.",
+      "physical_base": "Thin Central Asian man in his fifties, bony neck, dark burning eyes, short dark hair graying at the temples. Buy 'n' Fly logo polo shirt. The perpetual alertness of someone whose people have survived Mongols and repeat offenders. Carries a three-ring binder."
+    },
+    "metacop_one": {
+      "name": "First MetaCop",
+      "species": "human",
+      "gender": "male",
+      "affiliations": ["metacops"],
+      "carries": ["loogie_gun"],
+      "short": "Officious senior MetaCop who speaks only in legalese with simultaneous translation.",
+      "physical_base": "Private security officer in his thirties. Glossy black paramilitary tactical uniform, helmet with flip-down night-vision goggles, face partially obscured. Chest harness overloaded with clipped gear. Stiff officious bearing. Belt-mounted translator speaker."
+    },
+    "metacop_two": {
+      "name": "Second MetaCop",
+      "species": "human",
+      "gender": "male",
+      "affiliations": ["metacops"],
+      "carries": ["loogie_gun"],
+      "short": "Junior MetaCop — smirking, more juvenile, handles the loogie gun.",
+      "physical_base": "Similar black paramilitary tactical uniform, helmet, goggles. More casual and juvenile than his partner. Smirking demeanor."
+    },
+    "studley": {
+      "name": "Studley",
+      "species": "human",
+      "age": 16,
+      "gender": "male",
+      "ethnicity": "white American",
+      "short": "TMAWH teenage driver pumped full of horse testosterone, attempts and fails to kill Y.T. with his mother's minivan.",
+      "physical_base": "Teenage boy, roughly sixteen, white, absurdly over-muscled for his age from intravenous horse-testosterone injections at his high school locker room. Crew cut, acne, varsity jacket. Perpetually enraged. Oversized hands awkwardly gripping a minivan steering wheel."
+    },
+    "mr_pudgely": {
+      "name": "Mr. Pudgely",
+      "species": "human",
+      "gender": "male",
+      "ethnicity": "white American",
+      "affiliations": ["white_columns"],
+      "short": "White Columns microplantation owner who orders the pizza that Y.T. delivers in 29:54.",
+      "physical_base": "White suburban man in his fifties, fat, balding, wearing a pastel polo shirt tucked into khakis with wingtip shoes. Smug expression. Expensive watch."
+    },
+    "nun_surgeon": {
+      "name": "The Nun Surgeon",
+      "species": "human",
+      "gender": "female",
+      "affiliations": ["mercy_chain"],
+      "short": "Mercy Hospital neurologist attending to Da5id.",
+      "physical_base": "Middle-aged woman in her fifties, kind intelligent face, short gray hair partly covered by a simple black nun's veil. White surgeon's coat over a black habit. Small silver crucifix. Clipboard and stethoscope."
+    },
+    "major_clem": {
+      "name": "Major Clem",
+      "species": "human",
+      "gender": "male",
+      "ethnicity": "white American",
+      "short": "Military chopper pilot who flies Hiro to the hospital and Da5id's house.",
+      "physical_base": "Military officer in his forties, gray-streaked short military haircut, weathered white face, sharp blue eyes. Crisp olive-drab uniform with pilot's wings. Commanding presence."
+    },
+    "sushi_k": {
+      "name": "Sushi K",
+      "species": "avatar_custom",
+      "gender": "male",
+      "ethnicity": "Japanese",
+      "short": "Nipponese rap star in the Rock Star Quadrant of The Black Sun.",
+      "physical_base": "Nipponese rap star, late twenties, slender, wraparound black sunglasses. Defining feature: an enormous fan-shaped hairdo of bright orange and yellow spikes radiating outward from his head like a rising sun, extending several feet in each direction. Oversized gold chain, bright tracksuit."
+    },
+    "brandy_daemon": {
+      "name": "Brandy Daemon (Knockoff)",
+      "species": "daemon_software",
+      "short": "The Snow Crash payload. A cheap Taiwanese knockoff of the mass-market Brandy avatar, bundled inside the Snow Crash hypercard. Unrolls a scroll of binary static into the victim's optic nerve.",
+      "physical_base": "Tawdry off-brand avatar, unconvincingly proportioned, exaggerated cartoon-large breasts, crude ruby-red lips, vacant 'cute and spacy' expression, eyelashes rendered as solid flat ebony chips rather than individual lashes. Slight rendering errors at her seams. Clearly software, not a real person."
+    },
+    "jeek_clan": {
+      "name": "The Jeek Clan",
+      "species": "human",
+      "short": "A collective: a dozen lean bearded Central Asian taxicab drivers (Tadzhik, Abkhazian). Antagonists during the Buy 'n' Fly escape.",
+      "physical_base": "A dozen lean bearded Central Asian men, ages thirties through fifties. Weathered faces, intense dark eyes, windbreakers over loose trousers. Their battered mismatched cabs are adorned with prayer beads, air fresheners, hand-painted trim, alien livestock in the back seats. Often armed. Smell of incense."
+    },
+    "gorilla_bouncers": {
+      "name": "Gorilla Bouncer Daemons",
+      "species": "gorilla_rendered",
+      "affiliations": ["cic"],
+      "short": "The Black Sun's ejection squad.",
+      "physical_base": "A squad of massive realistically-rendered silverback gorillas wearing perfectly fitted black tuxedos with bow ties. Hugely muscled, expressionless, fully photorealistic fur. Move with coordinated unstoppable purpose."
+    },
+    "rat_thing": {
+      "name": "The Rat Thing",
+      "full_name": "Ng Security Industries Semi-Autonomous Guard Unit #A-367",
+      "species": "cybernetic_dog",
+      "affiliations": ["mr_lees_hong_kong"],
+      "short": "Cybernetic dog-brained guard unit patrolling the Mr. Lee's Greater Hong Kong franchise.",
+      "physical_base": "Robotic-biological hybrid the size of a Rottweiler. Body segmented into overlapping armored plates of dark burnished metal like rhinoceros hide. Four long curled cheetah-like legs. Impossibly long segmented tail of hundreds of vertebrae-like metal joints. Stubby winglike radiator fins along shoulders and spine glow white-hot. Biological eyes in a mechanical skull."
+    }
+  }
+}
